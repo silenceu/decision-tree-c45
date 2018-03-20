@@ -10,11 +10,11 @@ def getdata(filepath):
     data = gdal.Open(filepath)
     w = data.RasterXSize
     h = data.RasterYSize
-    r = data.GetRasterBand(1).ReadAsArray(0, 0, w, h).reshape(h * w)
-    g = data.GetRasterBand(2).ReadAsArray(0, 0, w, h).reshape(h * w)
-    b = data.GetRasterBand(3).ReadAsArray(0, 0, w, h).reshape(h * w)
-    img_data = [[r[idx], g[idx], b[idx]] for idx, _ in enumerate(r)]
-    img_data = np.array(img_data).reshape((h, w, 3))
+    r = data.GetRasterBand(1).ReadAsArray(0, 0, w, h).reshape(h * w, 1)
+    g = data.GetRasterBand(2).ReadAsArray(0, 0, w, h).reshape(h * w, 1)
+    b = data.GetRasterBand(3).ReadAsArray(0, 0, w, h).reshape(h * w, 1)
+    img_data = np.concatenate((r, g, b), axis=1)
+    img_data = img_data.reshape(h, w, 3))
     pre_data = img_data.reshape(img_data.shape[0] * img_data.shape[1], img_data.shape[2])
     return img_data, pre_data
 
