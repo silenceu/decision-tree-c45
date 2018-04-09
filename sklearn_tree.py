@@ -54,22 +54,22 @@ def main():
             pre_img[idx] = [0, 0, 255]
         else:
             pre_img[idx] = [255, 0, 0]
-    pre_data = pre_data.reshape((813, 1440, 3))
-    print(pre_data.shape)
-    for x in range(1, pre_data.shape[0] - 1):
-        for y in range(1, pre_data.shape[1] - 1):
+    pre_img = pre_img.reshape((813, 1440, 3))
+    print(pre_img.shape)
+    for x in range(1, pre_img.shape[0] - 1):
+        for y in range(1, pre_img.shape[1] - 1):
             tmp = [0, 0, 0]
             for i in range(x-1, x+2):
                 for j in range(y-1, y+2):
-                    tmp[np.argsort(pre_data[i, j])[2]] += 1
+                    tmp[np.argsort(pre_img[i, j])[2]] += 1
             print(tmp)
             rgb = np.argsort(tmp)[2]
             if rgb == 1:
-                pre_data[x, y] = [0, 255, 0]
+                pre_img[x, y] = [0, 255, 0]
             elif rgb == 2:
-                pre_data[x, y] = [0, 0, 255]
+                pre_img[x, y] = [0, 0, 255]
             else:
-                pre_data[x, y] = [255, 0, 0]
+                pre_img[x, y] = [255, 0, 0]
     img = Image.fromarray(pre_data, 'RGB')
     img.show()
 
